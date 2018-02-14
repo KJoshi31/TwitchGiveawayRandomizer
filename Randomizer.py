@@ -72,7 +72,7 @@ def semiFinalRandomizer(semiFinalList):
 
 
 
-b = ["Jim","Kyle","John","Rich","Brandon","Karam"]
+b = ["Jeff","Jim","Kyle","John","Rich","Brandon","Karam"]
 
 semiFinalList = randomizer(b)
 
