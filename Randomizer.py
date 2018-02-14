@@ -1,6 +1,8 @@
+#Custom made algorithm for picking a subscribed winner
+
 import random
 
-
+#creates a list of 3 semifinalists
 def randomizer(subList):
 	semiFinalList = []
 	finalistcounter = 0
@@ -15,7 +17,7 @@ def randomizer(subList):
 
 	return semiFinalList
 
-
+#populates a list of unique values from the list passed in
 def uniqueList(numberList):
 	uniqueValuesList = []
 
@@ -27,6 +29,7 @@ def uniqueList(numberList):
 
 	return uniqueValuesList
 
+#picks the winner from the semifinalist list based on the highest frequency of random numbers in the semiFinalList
 def selectWinner(one,two,three, semiFinalList):
 	semiList = [one,two,three]
 	maxValue = max(semiList)
@@ -35,6 +38,8 @@ def selectWinner(one,two,three, semiFinalList):
 
 	print("Winner: "+ semiFinalList[winnerIndex])
 
+#creates a list of 100 values mapping to 3 semifinalists.
+#This is creating a list of number variances.
 def semiFinalRandomizer(semiFinalList):
 	pickCounter = 0
 	pickList = []
@@ -44,11 +49,9 @@ def semiFinalRandomizer(semiFinalList):
 		pickList.append(numberIndexer)
 		pickCounter = pickCounter + 1
 
-	#print(pickList)
 
 	distinctValues = uniqueList(pickList)
 
-	#print(distinctValues)
 
 	count1 = 0
 	count2 = 0
@@ -71,7 +74,7 @@ def semiFinalRandomizer(semiFinalList):
 		
 
 
-
+#Test data
 b = ["Jeff","Jim","Kyle","John","Rich","Brandon","Karam"]
 
 semiFinalList = randomizer(b)
