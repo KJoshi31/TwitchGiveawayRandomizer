@@ -5,13 +5,13 @@ app = Flask(__name__)
 
 @app.route("/", methods = ['GET'])
 def loginPage():
-    twitchLoginRequest = TwitchFunctions.loginRequest()
-    return redirect(twitchLoginRequest.url)
+    return redirect(TwitchFunctions.loginRequest().url)
 
 
 @app.route('/authorize', methods = ['GET','POST'])
 def getAuthorization():
-    return "test authorize"
+    TwitchFunctions.fetchAccessToken()
+    return redirect('/homepage')
 
 @app.route('/homepage', methods = ['GET'])
 def homepage():
