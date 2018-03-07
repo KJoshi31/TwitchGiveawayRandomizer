@@ -1,10 +1,12 @@
 from flask import Flask, redirect
+import TwitchFunctions
 
 app = Flask(__name__)
 
 @app.route("/", methods = ['GET'])
 def loginPage():
-    return "test login page"
+    twitchLoginRequest = TwitchFunctions.loginRequest()
+    return redirect(twitchLoginRequest.url)
 
 
 @app.route('/authorize', methods = ['GET','POST'])
