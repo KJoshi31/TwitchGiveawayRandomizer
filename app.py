@@ -1,5 +1,11 @@
 from flask import Flask, redirect
 import TwitchFunctions
+import sys
+
+accessToken = ""
+
+#keys: userID, displayName, picture (cdn url), and bio
+userInfoDict = {} 
 
 app = Flask(__name__)
 
@@ -10,9 +16,17 @@ def loginPage():
 
 @app.route('/authorize', methods = ['GET','POST'])
 def getAuthorization():
-    TwitchFunctions.fetchAccessToken()
+    global accessToken
+
+    accessToken = TwitchFunctions.fetchAccessToken()
+    
     return redirect('/homepage')
 
 @app.route('/homepage', methods = ['GET'])
 def homepage():
-    return "test homepage"
+
+    global userInfoDict
+
+    userInfoDict =  TwitchFunctions.loadUserInfo(accessToken)
+
+    return "hi"
