@@ -29,4 +29,7 @@ def homepage():
 
     userInfoDict =  TwitchFunctions.loadUserInfo(accessToken)
 
+    TwitchFunctions.getChannelFollowers(userInfoDict.get('userID'))
+    TwitchFunctions.getChannelSubscribers(accessToken)
+
     return "hi"
