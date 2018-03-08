@@ -1,2 +1,4 @@
 # TwitchGiveawayRandomizer
-A Twitch application written in python for giveaways that streamers want to do. 
+A Twitch application written in python
+that may be utlized by streamers for 
+when they want to do giveaways
