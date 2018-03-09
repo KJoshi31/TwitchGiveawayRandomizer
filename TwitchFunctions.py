@@ -70,20 +70,55 @@ def loadUserInfo(accessTkn):
     #return copy of the dictionary full of the twitch user information
     return userInfo.copy()
 
+
+def getTotals(userID_Param, headers_Param, req_url_param):
+
+    totalsDict = {}
+
+    #if no authorization, execute code to get channel followers count
+    if headers_Param.get('Authorization') is None:
+        print("access token empty!"+ " UserID:"+str(userID_Param), file=sys.stderr)
+
+        followers = requests.get(req_url_param, headers = headers_Param)
+
+        followers = followers.json()
+
+        if '_total' in followers.keys():
+            totalsDict['followers'] = followers.get('_total')
+
+            print(str(totalsDict), file=sys.stderr)
+
+
+
+    #if there is an authorization in header, execute code to get channel subscriber count
+    else:
+
+        accessToken = headers_Param.get('Authorization')[6:]
+
+        print("Access Token: "+accessToken+ " UserID:"+str(userID_Param), file=sys.stderr)
+
+        subscribers = requests.get(req_url_param, headers = headers_Param)
+
+        subscribers = subscribers.json()
+
+        if '_total' in subscribers.keys():
+            totalsDict['subscribers'] = subscribers.get('_total')
+
+            print(str(totalsDict), file=sys.stderr)
+
+
+
+
 def getChannelFollowers(userID):
     headers = {'Accept':'application/vnd.twitchtv.v5+json',
     'Client-ID': CLIENT_ID}
 
-    #replace hardcoded userID/channelID with real userid/channelID
-    followersRequest = requests.get(baseURL+'channels/'+'44322889'+'/follows',
-    headers = headers)
+    #replace hardcoded userID/channelID with real userid/channelID - 44322889
+    requestUrl = baseURL+'channels/'+userID+'/follows'
 
-    followersRequest = followersRequest.json()
+    getTotals(userID, headers, requestUrl)
 
-    #get total number of followers number
-    totalFollowers = followersRequest.get('_total')
 
-    print(totalFollowers, file=sys.stderr)
 
 
 
@@ -93,19 +128,14 @@ def getChannelFollowers(userID):
     #     followersList.append(followObjectList[i].get('user').get('display_name'))
 
     
-def getChannelSubscribers(accessToken):
+def getChannelSubscribers(userID, accessToken):
     headers = {'Accept':'application/vnd.twitchtv.v5+json',
     'Client-ID': CLIENT_ID,
     'Authorization':'OAuth '+ accessToken }
     print(accessToken, file=sys.stderr)
+    
     #replace hardcoded userID/channelID with real userid/channelID
-    subscribersRequest = requests.get(baseURL+'channels/'+'129454141'+'/subscriptions',
-    headers = headers)
+    requestUrl = baseURL+'channels/'+'129454141'+'/subscriptions'
 
-    subscribersRequest = subscribersRequest.json()
+    getTotals(userID, headers, requestUrl)
 
-    print(str(subscribersRequest), file=sys.stderr)
-
-    totalSubscribers = subscribersRequest.get('_total')
-
-    print(totalSubscribers, file=sys.stderr)
